@@ -1,0 +1,12 @@
+replicaCount: 1
+
+image:
+  repository: martycpt/mlog01-frontend
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer
+  port: 80
+
+resources: {}

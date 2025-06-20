@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>mlog01 – Submit Log</title>
+</head>
+<body>
+  <h1>Submit a Log Entry</h1>
+  <form method="POST" action="/submit">
+    <label>Severity:</label>
+    <select name="severity">
+      <option value="info">Info</option>
+      <option value="warning">Warning</option>
+      <option value="error">Error</option>
+    </select><br><br>
+
+    <label>Message:</label><br>
+    <textarea name="message" rows="4" cols="50" required></textarea><br><br>
+
+    <button type="submit">Submit Log</button>
+  </form>
+
+  <h2>Latest Logs</h2>
+  <ul id="logList"></ul>
+
+  <script>
+    async function fetchLogs() {
+      const res = await fetch('/logs');
+      const data = await res.json();
+      const logList = document.getElementById('logList');
+      logList.innerHTML = '';
+      data.forEach(log => {
+        const li = document.createElement('li');
+        li.innerText = `[${log.timestamp}] (${log.severity.toUpperCase()}) - ${log.message}`;
+        logList.appendChild(li);
+      });
+    }
+    fetchLogs();
+    setInterval(fetchLogs, 5000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+
+{
+  "name": "mlog01-frontend",
+  "version": "1.0.0",
+  "description": "Frontend for mlog01 log submission app",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "express": "^4.19.2"
+  }
+}
