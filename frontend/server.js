@@ -9,11 +9,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// ✅ Serve index.html for GET /
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 // Submit form POST
 app.post('/submit', async (req, res) => {
   const { severity, message } = req.body;
   try {
-    await axios.post('http://backend/log', { severity, message }); // This is the internal Kubernetes DNS name
+    await axios.post('http://backend/log', { severity, message }); // Kubernetes DNS
     res.redirect('/');
   } catch (err) {
     console.error(err);
@@ -21,7 +26,7 @@ app.post('/submit', async (req, res) => {
   }
 });
 
-// Proxy GET logs
+// Proxy GET logs from backend
 app.get('/logs', async (req, res) => {
   try {
     const response = await axios.get('http://backend/logs');
